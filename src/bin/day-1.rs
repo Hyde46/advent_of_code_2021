@@ -9,8 +9,8 @@ fn read_input(input: &str) -> Vec<u32> {
     vectorized
 }
 
-fn sonar_sweep() -> usize {
-    let data = read_input(INPUT);
+fn sonar_sweep(input: &str) -> usize {
+    let data = read_input(input);
 
     let mut iter =  data.iter().peekable();
     let mut relief: Vec<bool> = Vec::new();
@@ -26,8 +26,8 @@ fn sonar_sweep() -> usize {
     relief.iter().filter(|&val| *val ).map(|_| 1).collect::<Vec<usize>>().len()
 }
 
-fn sonar_sweep_sliding_window() -> usize {
-    let data = read_input(INPUT);
+fn sonar_sweep_sliding_window(input: &str) -> usize {
+    let data = read_input(input);
 
     let mut iter =  data.iter().peekable();
     let mut relief: Vec<bool> = Vec::new();
@@ -56,6 +56,6 @@ fn sonar_sweep_sliding_window() -> usize {
 }
 
 fn main() {
-    println!("Number of increases in relief: {}", sonar_sweep());
-    println!("Number of increases in relief with sliding window: {}", sonar_sweep_sliding_window());
+    println!("Number of increases in relief: {}", sonar_sweep(INPUT));
+    println!("Number of increases in relief with sliding window: {}", sonar_sweep_sliding_window(INPUT));
 }
