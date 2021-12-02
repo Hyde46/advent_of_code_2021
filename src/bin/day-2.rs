@@ -10,11 +10,25 @@ const INPUT: &str = "src/inputs/day-2.txt";
 #[derive(Debug)]
 struct Pos<T> {
     x: T,
-    y: T
+    y: T,
+    aim: T
+}
+
+impl<'a, 'b, T> Add<&'b Pos<T>> for &'a Pos<T>
+    where &'a T: Add<&'b T, Output=T>, T: Copy
+{
+    type Output = Pos<T>;
+    fn add(self, other: &'b Pos<T>) -> Pos<T> {
+        Pos {
+            x: &self.x + &other.x,
+            y: &self.y + &other.y,
+            aim: self.aim
+        }
+    }
 }
 
 impl<T> Pos<T> {
-    fn new(x: T, y: T) -> Pos<T> { Self {x: x, y: y}}
+    fn new(x: T, y: T, aim: T) -> Pos<T> { Self {x: x, y: y, aim: aim}}
 
     fn position_hash(self) -> T
         where T: Mul<Output=T>
@@ -31,13 +45,13 @@ impl<T> Pos<T> {
         let rhs_value = rhs.parse::<T>().ok().unwrap();
         let pos = match lhs {
             "forward" => {
-                Pos{ x: rhs_value, y: T::default()}
+                Pos{ x: rhs_value, y: T::default(), aim: T::default()}
             },
             "up" => {
-                Pos{ x: T::default(), y: -rhs_value}
+                Pos{ x: T::default(), y: -rhs_value, aim: T::default()}
             },
             "down" => {
-                Pos{ x: T::default(), y: rhs_value}
+                Pos{ x: T::default(), y: rhs_value, aim: T::default()}
             },
             _ => {
                 return Err(AOCError::new("Invalid instruction found"))
@@ -45,17 +59,26 @@ impl<T> Pos<T> {
         };
         Ok(pos)
     }
-}
 
-impl<'a, 'b, T> Add<&'b Pos<T>> for &'a Pos<T>
-    where &'a T: Add<&'b T, Output=T>
-{
-    type Output = Pos<T>;
-    fn add(self, other: &'b Pos<T>) -> Pos<T> {
-        Pos {
-            x: &self.x + &other.x,
-            y: &self.y + &other.y
+    fn aim(self, other: &Pos<T>) -> Pos<T> 
+        where T: Add<Output=T>, T: Mul<Output=T>, T: Copy, T: PartialOrd, T: Default
+    {
+        if other.x == T::default() {
+            // aiming instruction
+            Pos {
+                x: self.x,
+                y: self.y,
+                aim: self.aim + other.y
+            }
+        } else {
+            // move instruction
+            Pos {
+                x: self.x + other.x,
+                y: self.y + self.aim * other.x,
+                aim: self.aim
+            }
         }
+        
     }
 }
 
@@ -67,12 +90,17 @@ fn read_input(input: &str) -> Vec<Pos<i32>> {
 
 fn solve_dive(input_path: &str) -> i32 {
     let inputs: Vec<Pos<i32>> = read_input(input_path);
-    inputs.iter().fold(Pos::new(0,0), |acc, i| acc.add(i)).position_hash()
+    inputs.iter().fold(Pos::new(0,0,0), |acc, i| acc.add(i)).position_hash()
 }
 
+fn solve_aimed_dive(input_path: &str) -> i32 {
+    let inputs: Vec<Pos<i32>> = read_input(input_path);
+    inputs.iter().fold(Pos::new(0,0,0), |acc, i| acc.aim(i)).position_hash()
+}
 
 fn main() {
-    println!("Diving result: {}", solve_dive(INPUT))
+    println!("Diving result: {}", solve_dive(INPUT));
+    println!("Diving result: {}", solve_aimed_dive(INPUT));
 }
 
 #[derive(Debug)]
