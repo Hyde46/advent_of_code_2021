@@ -63,20 +63,11 @@ impl<T> Pos<T> {
     fn aim(self, other: &Pos<T>) -> Pos<T> 
         where T: Add<Output=T>, T: Mul<Output=T>, T: Copy, T: PartialOrd, T: Default
     {
-        if other.x == T::default() {
-            // aiming instruction
-            Pos {
-                x: self.x,
-                y: self.y,
-                aim: self.aim + other.y
-            }
-        } else {
-            // move instruction
-            Pos {
-                x: self.x + other.x,
-                y: self.y + self.aim * other.x,
-                aim: self.aim
-            }
+        // Could generalize the aiming method to be part of add() if generic T would implement a Trait for identity value
+        Pos {
+            x: self.x + other.x,
+            y: self.y + self.aim * other.x,
+            aim: self.aim + other.y
         }
         
     }
