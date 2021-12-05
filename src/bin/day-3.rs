@@ -95,7 +95,6 @@ fn most_common_value_at_pos(vec: &Vec<Diagnostic<BIT_COUNT>>, pos: i32, default_
     (result > 0) as i32
 }
 
-
 fn least_common_value_at_pos(vec: &Vec<Diagnostic<BIT_COUNT>>, pos: i32, default_at_0: i32) -> i32 {
     let result = vec.iter().fold(0, |accum, x| {
         let value = x.accum[pos as usize];
@@ -136,11 +135,11 @@ fn calculate_oxygen_rating(diagnostics: &Vec<Diagnostic<BIT_COUNT>>) -> i32 {
     let mut bit_flag_position = 0;
     while d.len() != 1 {
         let most_common_bit = most_common_value_at_pos(&d, bit_flag_position, 1);
-        d.retain(|x| x.accum[bit_flag_position as usize] == most_common_bit );
+        d.retain(|x| x.accum[bit_flag_position as usize] == most_common_bit);
         bit_flag_position += 1;
     }
     let mvp_diagnostics = d.first().unwrap().accum.clone();
-    println!("oxygen: {:?}",mvp_diagnostics);
+    println!("oxygen: {:?}", mvp_diagnostics);
     Diagnostic::<BIT_COUNT>::vec_to_integer(mvp_diagnostics)
 }
 
@@ -149,11 +148,11 @@ fn calculate_co2_rating(diagnostics: &Vec<Diagnostic<BIT_COUNT>>) -> i32 {
     let mut bit_flag_position = 0;
     while d.len() != 1 {
         let most_common_bit = least_common_value_at_pos(&d, bit_flag_position, 0);
-        d.retain(|x| x.accum[bit_flag_position as usize] == most_common_bit );
+        d.retain(|x| x.accum[bit_flag_position as usize] == most_common_bit);
         bit_flag_position += 1;
     }
     let mvp_diagnostics = d.first().unwrap().accum.clone();
-    println!("co2: {:?}",mvp_diagnostics);
+    println!("co2: {:?}", mvp_diagnostics);
     Diagnostic::<BIT_COUNT>::vec_to_integer(mvp_diagnostics)
 }
 
