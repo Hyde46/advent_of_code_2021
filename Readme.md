@@ -12,4 +12,4 @@ Solutions for [advent of code 2021](https://adventofcode.com/2021)
  
  [Day 5](https://github.com/Hyde46/advent_of_code_2021/blob/main/src/bin/day-5.rs)
  
- [Day 6](https://github.com/Hyde46/advent_of_code_2021/blob/main/src/bin/day-6.rs)
+ [Day 6](https://github.com/Hyde46/advent_of_code_2021/blob/main/src/bin/day-6.rs) Super short solution
