@@ -168,7 +168,8 @@ fn find_last_bingo_winner(input_path: &str) -> i32 {
                 if boards_won.len() == board_len {
                     // Find last board and get value
                     let last_board_index = boards_won.last().unwrap().clone();
-                    return bingo_boards[last_board_index as usize].winning_value(&current_drawn_numbers);
+                    return bingo_boards[last_board_index as usize]
+                        .winning_value(&current_drawn_numbers);
                 }
             }
             index_counter += 1;
@@ -179,5 +180,8 @@ fn find_last_bingo_winner(input_path: &str) -> i32 {
 
 fn main() {
     println!("Bingo winning board result: {}", find_bingo_winner(INPUT));
-    println!("Last winning board result: {}", find_last_bingo_winner(INPUT));
+    println!(
+        "Last winning board result: {}",
+        find_last_bingo_winner(INPUT)
+    );
 }
