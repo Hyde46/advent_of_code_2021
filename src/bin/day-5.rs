@@ -51,6 +51,7 @@ impl Line {
     }
 
     fn is_diagonal(&self) -> bool {
+        //Assumes good input
         !self.is_horizontal() && !self.is_vertical()
     }
 
