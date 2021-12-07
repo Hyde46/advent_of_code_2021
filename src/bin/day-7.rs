@@ -13,19 +13,15 @@ fn read_input(input: &str) -> Vec<i32> {
 
 fn calculate_fuel_count(x: i32, crab_cache: &HashMap<i32, i32>, distanced: bool) -> i32 {
     match distanced {
-        true=> {
-            crab_cache.iter().fold(0, |accum, (k,v)| {
-                let fuel_sum = (0..((k - x).abs() + 1)).fold(0, |accum, v| v+accum);
-                let value = accum + (v * fuel_sum);
-                value
-            })
-        },
-        false => {
-            crab_cache.iter().fold(0, |accum, (k,v)| {
-                let value = accum + (v * (k - x).abs());
-                value
-            })
-        }
+        true => crab_cache.iter().fold(0, |accum, (k, v)| {
+            let fuel_sum = (0..((k - x).abs() + 1)).fold(0, |accum, v| v + accum);
+            let value = accum + (v * fuel_sum);
+            value
+        }),
+        false => crab_cache.iter().fold(0, |accum, (k, v)| {
+            let value = accum + (v * (k - x).abs());
+            value
+        }),
     }
 }
 
@@ -44,12 +40,17 @@ fn move_crabs_brute_force(input: &str, distanced: bool) -> i32 {
             },
         );
     });
-    let distance_counters: Vec<i32> = (0..max + 1).map(|i| calculate_fuel_count(i as i32, &crabs_cache, distanced)).collect();
+    let distance_counters: Vec<i32> = (0..max + 1)
+        .map(|i| calculate_fuel_count(i as i32, &crabs_cache, distanced))
+        .collect();
     *distance_counters.iter().min().unwrap()
 }
 
 fn main() {
     // Median would be enough for p1, but not for p2 anymore
     println!("Fuel cost {}", move_crabs_brute_force(INPUT, false));
-    println!("Crab-engineering fuel cost {}", move_crabs_brute_force(INPUT, true));
+    println!(
+        "Crab-engineering fuel cost {}",
+        move_crabs_brute_force(INPUT, true)
+    );
 }
