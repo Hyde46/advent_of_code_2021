@@ -13,3 +13,4 @@ bench = false
 [dependencies]
 itertools = "0.10.1"
 regex = "1.5.4"
+streaming-stats = "0.2.3"
