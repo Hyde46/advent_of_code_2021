@@ -49,6 +49,7 @@ fn move_crabs_brute_force(input: &str, distanced: bool) -> i32 {
 }
 
 fn main() {
+    // Median would be enough for p1, but not for p2 anymore
     println!("Fuel cost {}", move_crabs_brute_force(INPUT, false));
     println!("Crab-engineering fuel cost {}", move_crabs_brute_force(INPUT, true));
 }
