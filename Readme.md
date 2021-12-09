@@ -15,3 +15,6 @@ Solutions for [advent of code 2021](https://adventofcode.com/2021)
  [Day 6](https://github.com/Hyde46/advent_of_code_2021/blob/main/src/bin/day-6.rs) Super short solution
 
  [Day 7](https://github.com/Hyde46/advent_of_code_2021/blob/main/src/bin/day-7.rs)
+
+ [Day 8](https://github.com/Hyde46/advent_of_code_2021/blob/main/src/bin/day-8.rs)
+
